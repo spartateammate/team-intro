@@ -3,6 +3,7 @@ HTML, CSS, Javascript를 활용하여 간단한 팀 소개 웹 페이지를 만�
 
 
 ***와이어프레임 초안<br>***
+
 **HOME**
 ![image](https://github.com/user-attachments/assets/b8f1524f-a356-45a6-8ecd-50301238a99d)
 
