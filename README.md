@@ -2,7 +2,7 @@
 HTML, CSS, Javascript를 활용하여 간단한 팀 소개 웹 페이지를 만들어보는 미니 프로젝트 입니다.
 
 
-***와이어프레임 초안***
+***와이어프레임 초안<br>***
 **HOME**
 ![image](https://github.com/user-attachments/assets/b8f1524f-a356-45a6-8ecd-50301238a99d)
 
