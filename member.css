@@ -1,4 +1,7 @@
-
+* {
+    font-family: "Black Han Sans", sans-serif; /*전체 폰트 설정*/
+    color: #333;
+}
 
 header {
     width: 1200px;
@@ -10,11 +13,27 @@ main {
 }
 
 .card-body {
-    padding: 20px;
-    background-color: #f7f7f7;
-    text-align: left;
-    border-top: 1px solid #eaeaea;
+    position: absolute; /* 카드 내에서 절대 위치 설정 */
+    top: 0; /* 상단에 위치 */
+    left: 0; /* 좌측에 위치 */
+    right: 0; /* 우측에 맞춤 */
+    bottom: 0; /* 하단에 맞춤 */
+    background-color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column; /* 자식 요소들을 세로로 배치 */
+    justify-content: flex-end; /* 자식 요소들을 세로로 가운데 정렬 */
+    align-items: flex-end;
+    text-align: right;
+    padding: 20px; /*컨테이너의 내부 여백 설정*/
+    box-sizing: border-box; /* 패딩 포함 크기 계산 */
+    color: #333; /* 텍스트 색상 */
 }
+
+.card-body > h5 {
+    font-size: 30px;
+    margin: 0; /* 기본 마진 제거 */
+}
+
 
 .member {
     margin-top: 50px;
@@ -24,21 +43,23 @@ main {
 
 .cardMsg {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /*자식 요소들이 한 줄에 다 들어가지 않으면 다음 줄로 넘어가도록*/
     justify-content: center;
 }
 
 .card-img {
     width: 100%;
     height: 25vw; 
-    object-fit: cover; 
+    object-fit: cover; /* 사진 비율을 유지하면서 영역에 맞게 조정*/
+    display: block; 
 }
 
 .card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* 자식 요소를 절대 위치로 설정하기 위해 상대 위치 지정 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /*호버 시 애니메이션 효과 > 좀 더 부드럽게*/
 }
 
-.card:hover {
+.card:hover { /* 사용자가 카드 위에 마우스를 올렸을 때 적용되는 스타일*/
     transform: scale(1.05); /* 카드 확대 */
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
 }
@@ -48,42 +69,63 @@ footer {
     width: 1200px;
 }
 
+/* 모달 배경 스타일...은 검색해도 따로 예시를 찾을 수도 없어서 일단 ChatGPT의 도움을 빌렸음.*/
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 1000; /* 모달이 다른 콘텐츠 위에 오도록 설정 */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-    justify-content: center;
-    align-items: center;
+    background: rgba(0, 0, 0, 0.6); /* 더 어두운 배경색 */
+    backdrop-filter: blur(5px); /* 배경 블러 효과 */
+    transition: opacity 0.3s ease; /* 부드러운 전환 효과 */
 }
 
+/* 모달 열릴 때와 닫힐 때의 애니메이션 */
+.modal.open {
+    display: flex; /* 모달 열릴 때 */
+    opacity: 1; /* 모달 투명도 설정 */
+}
+
+.modal.close {
+    opacity: 0; /* 모달 닫힐 때 */
+}
+
+/* 모달 콘텐츠 스타일 */
 .modal-content {
     background-color: #fff;
-    margin: 15% auto;
+    margin: 5% auto; /* 상단 여백 조정 */
     padding: 20px;
-    border-radius: 5px;
-    width: 80%;
+    border-radius: 10px; /* 둥글게 처리 */
+    width: 90%;
     max-width: 600px;
     position: relative;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    transition: transform 0.3s ease; /* 부드러운 확대 애니메이션 */
+    transform: translateY(-30px); /* 초기 위치 조정 */
 }
 
+.modal.open .modal-content {
+    transform: translateY(0); /* 모달 열릴 때 애니메이션 */
+}
+
+/* 닫기 버튼 스타일 */
 .close {
-    color: #aaa;
+    color: #666;
     position: absolute;
-    right: 10px;
-    top: 10px;
-    font-size: 28px;
+    right: 20px;
+    top: 20px;
+    font-size: 32px;
     font-weight: bold;
     cursor: pointer;
+    transition: color 0.3s ease; /* 색상 변화 애니메이션 */
 }
 
 .close:hover,
 .close:focus {
-    color: black;
+    color: #000; /* 호버 시 색상 변경 */
     text-decoration: none;
 }
