@@ -10,6 +10,7 @@
     <link href="css/member.css" rel="stylesheet">
     <title>멤버 소개</title>
     <script type="module">
+
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
@@ -35,38 +36,48 @@
         const storage = getStorage(app);
 
 
-        // 이미지용 uuid 생성 및 파일 첨부
-        let renameFile;
-        let storageRef;
-        let url;
+        // 파일 첨부 시 이벤트 발생(option)
+        //fileInput.addEventListener('change', async function () {
+
+        //});
+
+        // 1. 이미지용 uuid 생성 및 파일 첨부
+        // 'id=image' 요소에 접근하기 위해 document 객체를 사용
         const fileInput = document.getElementById('image');
-        fileInput.addEventListener('change', async function () {
+        $("#posting-btn").click(async function () {
+
+            // 이미지 URL 변수 선언
+            let url;
             // 이미지 객체 가져오기
             let selectedFile = fileInput.files[0];
             // uuid 생성
             let uuid = self.crypto.randomUUID();
             // 파일 확장자 추출
             let fileExtension = selectedFile.name.split('.').pop();
-            // 파일 이름 변경
-            renameFile = new File([selectedFile], uuid + '.' + fileExtension, { type: selectedFile.type });
-            // Firebase Storage 참조
-            storageRef = ref(storage, renameFile.name);
+            // 파일 이름 변경(배열은 수정이 불가하기 때문에 새로운 File 객체 생성)
+            let renameFile = new File([selectedFile], uuid + '.' + fileExtension, { type: selectedFile.type });
+            // Firebase Storage 연결
+            let storageRef = ref(storage, renameFile.name);
 
-            // Firebase Storage 업로드 및 URL 가져오기
+            // 2. Firebase Storage 업로드 및 URL 가져오기
             try {
+                // try 구문 안에서 에러가 발생하면 catch 구문으로 이동
+                // renameFile 변수를 rename으로 변경 후 에러를 일으키면 catch 구문으로 이동
+                // https://helloworldjavascript.net/pages/290-exception.html
+                //throw new Error('에러!'); // 강제 에러 발생 코드
                 const snapshot = await uploadBytes(storageRef, renameFile);
                 console.log('Uploaded a blob', snapshot);
 
-                // 업로드가 완료된 후 URL을 pull
+                // 3. 업로드가 완료된 후 URL을 가져오기
                 url = await getDownloadURL(storageRef);
                 console.log('File available at', url);
-            } catch (error) {
-                console.error('Error during upload or fetching URL:', error);
-            }
-        });
 
-        $("#posting-btn").click(async function () {
-            // 데이터베이스에 데이터 추가
+            } catch (error) {
+                alert('파일 업로드 중 오류가 발생했습니다.');
+                console.error(error);
+            }
+
+            // 4. 데이터베이스에 데이터 추가
             let name = $('#name').val();
             let comment = $('#comment').val();
             let image = url;
@@ -75,8 +86,31 @@
             await addDoc(collection(db, "member"), doc);
             alert('저장 완료!');
             window.location.reload();
-        })
+        });
 
+        // 5. 데이터베이스에서 데이터 가져오기
+        let docs = await getDocs(collection(db, "member"));
+        docs.forEach((doc) => {
+            let row = doc.data();
+
+            let name = row['name'];
+            let comment = row['comment'];
+            let image = row['image'];
+
+            let temp_html = `<div class="col">
+                <div class="card" style="width: 24rem;">
+                    <img src="${image}"" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${name}</h5>
+                        <p class="card-text">${comment}</p>
+                        <a href="#" class="btn btn-primary">블로그 링크</a>
+                        <a href="#" class="btn btn-secondary">Github 링크</a>
+                    </div>
+                </div>
+            </div>`;
+
+            $('#member-card').append(temp_html);
+        });
     </script>
 </head>
 
@@ -106,7 +140,7 @@
         </div>
 
         <h1 class="member">멤버 소개</h1>
-        <div class="row row-cols-1 row-cols-md-3 g-4 cardMsg">
+        <div id="member-card" class="row row-cols-1 row-cols-md-3 g-4 cardMsg">
             <div class="col">
                 <div class="card" style="width: 24rem;">
                     <img src="assets/image/박가온누리.jpeg" class="card-img-top" alt="...">
