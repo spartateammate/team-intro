@@ -64,7 +64,7 @@
         margin: 10px 0;
         padding: 10px;
         border-radius: 5px;
-        width: 500px;
+        width: 550px;
     }
 
     .task {
@@ -91,17 +91,22 @@
     .btn:hover {
         background-color: #f3ac7a;
     }
-    .weather-box{
-        
-        display: flex;
-    }
 </style>
 
 
 <body>
-    <div class="weather-box">
-        <div
-            style="background-color : 	#F7BD93; padding : 40px;color : #fff; border-radius: 10px; width: 490px;  height : 100px; margin-left: 600px;  margin-bottom: 30px;">
+        
+    <div class="flex-box">
+        <div class="ytb-box">
+            <iframe width="600" height="420" style="border-radius: 1rem;"
+                src="https://www.youtube.com/embed/rTKqSmX9XhQ?si=gYOuA_26xz73ksTq" title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="todo-box">
+            <div
+            style="background-color : 	#F7BD93; padding : 40px;color : #fff; border-radius: 10px; width: 490px;  height : 100px; margin-bottom: 30px;">
             <div style="float : left;">
                 <div class="weather_icon"></div>
             </div><br>
@@ -119,53 +124,43 @@
                 <div class="city" style="font-size : 13pt"></div>
             </div>
         </div>
-    </div>
-    <div class="flex-box">
-        <div class="ytb-box">
-            <iframe width="600" height="420" style="border-radius: 1rem;"
-                src="https://www.youtube.com/embed/rTKqSmX9XhQ?si=gYOuA_26xz73ksTq" title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-        <div class="todo-box">
             <ul id="todo-list">
                 <li>
                     <div class="task">
-                        <input type="checkbox"> TIL 작성 & 제출
+                        <input type="checkbox"> TIL 제출
                     </div>
-                    <a href="https://github.com" class="btn" target="_blank">바로가기</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdJFwNJMfPoc2jPbVq9jkTFk-I5hP4LBPCLpHGx6rZ9C6WOIQ/viewform" class="btn" target="_blank">바로가기</a>
                 </li>
                 <li>
                     <div class="task">
-                        <input type="checkbox"> 코드타카 제출
+                        <input type="checkbox"> 알고리즘 제출
                     </div>
-                    <a href="https://example.com" class="btn" target="_blank">바로가기</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeM4iHj97P0M6MkswZ2_Og55OkGNAWs8uv8FG1jVRXt7DNkaA/viewform" class="btn" target="_blank">바로가기</a>
                 </li>
                 <li>
                     <div class="task">
-                        <input type="checkbox"> 와이어프레임 설계
+                        <input type="checkbox"> SQL 제출
                     </div>
-                    <a href="https://example.com" class="btn" target="_blank">바로가기</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmxJ8zUm_aI64VJNWT8QDyoams8EyYo8QWSMcK7dPDIp2W-g/viewform" class="btn" target="_blank">바로가기</a>
+                </li>
+                <!-- <li>
+                    <div class="task">
+                        <input type="checkbox"> 데일리 루틴
+                    </div>
+                    <a href="https://docs.google.com/spreadsheets/d/1QKxFGflFb5hqbAAvosSOtECwrymAM_y7QSiw_lEj20A/edit?gid=0#gid=0" class="btn" target="_blank">바로가기</a>
                 </li>
                 <li>
                     <div class="task">
-                        <input type="checkbox"> 역할 분담
+                        <input type="checkbox"> 출석체크
                     </div>
-                    <a href="https://example.com" class="btn" target="_blank">바로가기</a>
+                    <a href="https://nbcamp.spartacodingclub.kr/mypage/attendance" class="btn" target="_blank">바로가기</a>
                 </li>
                 <li>
                     <div class="task">
-                        <input type="checkbox"> 페이지 구성
+                        <input type="checkbox"> 팀 노션
                     </div>
-                    <a href="https://example.com" class="btn" target="_blank">바로가기</a>
-                </li>
-                <li>
-                    <div class="task">
-                        <input type="checkbox"> 페이지 구성
-                    </div>
-                    <a href="https://example.com" class="btn" target="_blank">바로가기</a>
-                </li>
+                    <a href="https://teamsparta.notion.site/4-all-fect-5bcfb5497efa4070972f8a5d4784a023" class="btn" target="_blank">바로가기</a>
+                </li> -->
             </ul>
         </div>
     </div>
