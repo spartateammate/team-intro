@@ -57,7 +57,7 @@
 여기에 코드 Merge 전략에 대한 설명을 추가하세요.
 
 ## Demo Video
-<iframe width="560" height="315" src="https://www.youtube.com/embed/gCQFvp6iU7k?si=xfZ9Z8rGwUZgcZIO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![Watch the video](https://img.youtube.com/vi/gCQFvp6iU7k/maxresdefault.jpg)](https://www.youtube.com/watch?v=gCQFvp6iU7k)
 
 ## 4 all fect 팀원들의 블로그로 놀러오세요
 <a href="https://www.example.com" class="button-link" style="display:inline-block; padding:10px 20px; font-size:16px; color:black; background-color:#F5F5F5; text-align:center; text-decoration:none; border-radius:4px; border:none;">김명훈</a>
