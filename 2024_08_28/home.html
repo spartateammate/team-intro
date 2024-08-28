@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/frame.css">
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc, doc, setDoc, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyCbzRMxv0-Y2smcZt-9ZQL6pdBJ0Ox52fk",
+            authDomain: "sparta-d87e6.firebaseapp.com",
+            projectId: "sparta-d87e6",
+            storageBucket: "sparta-d87e6.appspot.com",
+            messagingSenderId: "572511990535",
+            appId: "1:572511990535:web:972d78dff455f17c08cba2",
+            measurementId: "G-RHB882EJ8M"
+        };
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const now = new Date();
+        const todayDate = now.toISOString().split('T')[0].replace(/-/g, ''); // 오늘날짜 'YYYYMMDD' 형식
+
+        // 투데이 수를 카운트하는 함수
+        async function todayCount() {
+            const docRef = doc(db, "team-intro", todayDate);
+            const todayDB = await getDoc(docRef);
+
+            // localStorage API로 페이지 마지막 방문일 확인하기
+            const lastVisitDate = localStorage.getItem('lastVisitDate');
+
+
+            if (!todayDB.data()) {
+                await setDoc(docRef, {
+                    today: 1
+                });
+                $('#cnt').text(1);
+                localStorage.setItem('lastVisitDate', todayDate); // 현재 날짜를 저장
+            } else {
+                let cnt = todayDB.data().today;
+                console.log("확인된 현재 날짜 : ", todayDate);
+                console.log("마지막 방문 날짜 : ", lastVisitDate);
+                // 첫방문과 날짜가 다를경우
+                if (lastVisitDate === null || lastVisitDate !== todayDate) {
+                    localStorage.setItem('lastVisitDate', todayDate); // 현재 날짜를 저장
+                    cnt++;
+                }
+
+                // 현재방문자 수 기록
+                await setDoc(docRef, {
+                    today: cnt
+                });
+
+                $('#cnt').text(cnt);    // 헤더 방문자 수에 출력
+            }
+        }
+
+        // 문서가 준비 되면 실행되는 비동기 함수
+        $(document).ready(async function firstPageLoad() {
+            try {
+                await todayCount();
+            } catch (error) {
+                console.error('에러 발생:', error);
+            }
+        });
+
+        // 날씨 api - fontawesome 아이콘
+        var weatherIcon = {
+            '01': 'fas fa-sun',
+            '02': 'fas fa-cloud-sun',
+            '03': 'fas fa-cloud',
+            '04': 'fas fa-cloud-meatball',
+            '09': 'fas fa-cloud-sun-rain',
+            '10': 'fas fa-cloud-showers-heavy',
+            '11': 'fas fa-poo-storm',
+            '13': 'far fa-snowflake',
+            '50': 'fas fa-smog'
+        };
+
+        // 날씨 api - 서울
+        var apiURI = "http://api.openweathermap.org/data/2.5/weather?q=" + 'seoul' + "&appid=" + "ecea47f8fd8809b5590cbe7f890b4271";
+        $.ajax({
+            url: apiURI,
+            dataType: "json",
+            type: "GET",
+            async: "false",
+            success: function (resp) {
+
+                var $Icon = (resp.weather[0].icon).substr(0, 2);
+                var $weather_description = resp.weather[0].main;
+                var $Temp = Math.floor(resp.main.temp - 273.15) + 'º';
+                var $humidity = '습도&nbsp;&nbsp;&nbsp;&nbsp;' + resp.main.humidity + ' %';
+                var $wind = '바람&nbsp;&nbsp;&nbsp;&nbsp;' + resp.wind.speed + ' m/s';
+                var $city = '서울';
+                var $cloud = '구름&nbsp;&nbsp;&nbsp;&nbsp;' + resp.clouds.all + "%";
+                var $temp_min = '최저 온도&nbsp;&nbsp;&nbsp;&nbsp;' + Math.floor(resp.main.temp_min - 273.15) + 'º';
+                var $temp_max = '최고 온도&nbsp;&nbsp;&nbsp;&nbsp;' + Math.floor(resp.main.temp_max - 273.15) + 'º';
+
+
+                $('.weather_icon').append('<i class="' + weatherIcon[$Icon] + ' fa-5x" style="height : 80px; width : 80px;"></i>');
+                $('.weather_description').prepend($weather_description);
+                $('.current_temp').prepend($Temp);
+                $('.humidity').prepend($humidity);
+                $('.wind').prepend($wind);
+                $('.city').append($city);
+                $('.cloud').append($cloud);
+                $('.temp_min').append($temp_min);
+                $('.temp_max').append($temp_max);
+            }
+        })
+    </script>
+</head>
+
+<style>
+    body {
+        width: 1200px;
+        margin: 0 auto;
+        margin-top: 200px;
+    }
+
+    .flex-box {
+        display: flex;
+    }
+
+    .ytb-box {
+        border-radius: 30px;
+    }
+
+    .todo-box {
+        margin-left: 50px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 10px;
+    }
+
+    th,
+    td {
+        border: 1px solid #000;
+        text-align: center;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #F7BD93;
+        color: white;
+    }
+
+    /*여기부터 to do list*/
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #e3f2fd;
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+        width: 550px;
+    }
+
+    .task {
+        flex-grow: 1;
+    }
+
+    .task input[type="checkbox"] {
+        margin-right: 10px;
+    }
+
+    .btn {
+        background-color: #F7BD93;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #f3ac7a;
+    }
+</style>
+
+<header>
+    <!-- 네비게이션 바 부분 -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" data-bs-theme="light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="assets/logo/fourlogo.png" alt="4" width="55px" height="55px"> all
+                fect</a>
+
+            <!-- 방문자 수 카운트 -->
+            <div class="navRightBox">
+
+                <div class="tdCount">
+                    오늘 방문자 수 : <span id="cnt">0</span>명
+                </div>
+
+                <!-- 반응형 웹 토글 버튼 -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03"
+                    aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarColor03">
+                    <!--
+                        me-auto : 왼쪽 정렬
+                        mx-auto : 가운데 정렬
+                        ms-auto : 오른쪽 정렬
+                        px-2    : 좌우 패딩 
+                    -->
+                    <ul class="navbar-nav ms-auto nav-underline">
+                        <li class="nav-item px-2">
+                            <!--active 클래스를 추가하여 현재 페이지 나타내기-->
+                            <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a class="nav-link" href="team.html">팀 소개</a>
+                        </li>
+                        <li class="nav-item px-2">
+                            <a class="nav-link" href="member.html">멤버 소개</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<body>
+    <div class="flex-box">
+        <div class="ytb-box">
+            <iframe width="600" height="390" style="border-radius: 1rem;"
+                src="https://www.youtube.com/embed/rTKqSmX9XhQ?si=gYOuA_26xz73ksTq" title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="todo-box">
+            <div
+                style="background-color : 	#F7BD93; padding : 40px;color : #fff; border-radius: 10px; width: 490px;  height : 100px; margin-bottom: 30px;">
+                <div style="float : left;">
+                    <div class="weather_icon"></div>
+                </div><br>
+
+                <div style="float : right; margin : -5px 0px 0px 60px; font-size : 11pt">
+                    <div class="temp_min"></div>
+                    <div class="temp_max"></div>
+                    <div class="humidity"></div>
+                    <div class="wind"></div>
+                    <div class="cloud"></div>
+                </div>
+                <div style="float : right; margin-top : -45px;">
+                    <div class="current_temp" style="font-size : 50pt"></div>
+                    <div class="weather_description" style="font-size : 20pt"></div>
+                    <div class="city" style="font-size : 13pt"></div>
+                </div>
+            </div>
+            <ul id="todo-list">
+                <li>
+                    <div class="task">
+                        <input type="checkbox"> TIL 제출
+                    </div>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdJFwNJMfPoc2jPbVq9jkTFk-I5hP4LBPCLpHGx6rZ9C6WOIQ/viewform"
+                        class="btn" target="_blank">바로가기</a>
+                </li>
+                <li>
+                    <div class="task">
+                        <input type="checkbox"> 알고리즘 제출
+                    </div>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeM4iHj97P0M6MkswZ2_Og55OkGNAWs8uv8FG1jVRXt7DNkaA/viewform"
+                        class="btn" target="_blank">바로가기</a>
+                </li>
+                <li>
+                    <div class="task">
+                        <input type="checkbox"> SQL 제출
+                    </div>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmxJ8zUm_aI64VJNWT8QDyoams8EyYo8QWSMcK7dPDIp2W-g/viewform"
+                        class="btn" target="_blank">바로가기</a>
+                </li>
+                <!-- <li>
+                    <div class="task">
+                        <input type="checkbox"> 데일리 루틴
+                    </div>
+                    <a href="https://docs.google.com/spreadsheets/d/1QKxFGflFb5hqbAAvosSOtECwrymAM_y7QSiw_lEj20A/edit?gid=0#gid=0" class="btn" target="_blank">바로가기</a>
+                </li>
+                <li>
+                    <div class="task">
+                        <input type="checkbox"> 출석체크
+                    </div>
+                    <a href="https://nbcamp.spartacodingclub.kr/mypage/attendance" class="btn" target="_blank">바로가기</a>
+                </li>
+                <li>
+                    <div class="task">
+                        <input type="checkbox"> 팀 노션
+                    </div>
+                    <a href="https://teamsparta.notion.site/4-all-fect-5bcfb5497efa4070972f8a5d4784a023" class="btn" target="_blank">바로가기</a>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+    <h2 style="float: right;">4 ALL FECT / WBS</h2>
+
+    <table>
+        <tr>
+            <th>업무</th>
+            <th>8/26(월)</th>
+            <th>8/27(화)</th>
+            <th>8/28(수)</th>
+            <th>8/29(목)</th>
+            <th>8/30(금)</th>
+        </tr>
+        <tr>
+            <td>팀 Github 생성</td>
+            <td><input type="checkbox" checked></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>웹 페이지에 들어갈 내용 구성</td>
+            <td><input type="checkbox" checked></td>
+            <td><input type="checkbox" checked></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>와이어프레임 설계</td>
+            <td><input type="checkbox" checked></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>역할 분담</td>
+            <td><input type="checkbox" checked></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>페이지 구성</td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>최종 코드 merge</td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>QA 테스트</td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>발표용 시연 영상 녹화</td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>결과물 제출 및 발표</td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+            <td><input type="checkbox"></td>
+        </tr>
+    </table>
+
+
+</body>
+
+<!-- Footer 영역 -->
+<footer class="py-3 my-4">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="home.html" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="team.html" class="nav-link px-2 text-muted">팀 소개</a></li>
+        <li class="nav-item"><a href="member.html" class="nav-link px-2 text-muted">멤버 소개</a></li>
+    </ul>
+    <p class="text-center text-muted">©2024 TEAMSPARTA</p>
+</footer>
+
+<!-- 부트스트랩의 자바스크립트 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+</html>
