@@ -11,8 +11,8 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <title>멤버 소개</title>
-
     <script type="module">
+
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
@@ -29,6 +29,14 @@
             //messagingSenderId: "${{secrets.MSG_SEND_ID}}",
             //appId: "${{secrets.APP_ID}}",
             //measurementId: "${{secrets.MEASUR_ID}}"
+            apiKey: "AIzaSyCLn7LxEdF5Km6d3DELpGe0PySsY-9xx4c",
+            authDomain: "sparta-afc86.firebaseapp.com",
+            projectId: "sparta-afc86",
+            storageBucket: "sparta-afc86.appspot.com",
+            messagingSenderId: "947455013488",
+            appId: "1:947455013488:web:e16c099b85850220b7bab5",
+            measurementId: "G-4GKC2RNF92"
+
         };
 
         // Firebase 인스턴스 초기화
@@ -122,13 +130,15 @@
 
             // 4. 데이터베이스에 데이터 추가
             let name = $('#name').val();
-            let title = $('#title').val();
-            let description = $('#description').val();
+            let short = $('#short').val();
+            let mbti = 'MBTI: ' + $('#mbti').val();
+            let pros = '장점: ' + $('#pros').val();
+            let groupplay = '협업 스타일: ' + $('#groupplay').val();
             let github = $('#github').val();
             let blog = $('#blog').val();
             let image = url;
 
-            let doc = { 'name': name, 'title': title, 'description': description, 'github': github, 'blog': blog, 'image': image };
+            let doc = { 'name': name, 'short': short, 'mbti': mbti, 'pros': pros, 'groupplay': groupplay, 'github': github, 'blog': blog, 'image': image };
             await addDoc(collection(db, "member"), doc);
             alert('저장 완료!');
             window.location.reload();
@@ -141,36 +151,40 @@
 
 
             let name = row['name'];
-            let title = row['title'];
-            let description = row['description'];
+            let short = row['short'];
+            let mbti = row['mbti'];
+            let pros = row['pros'];
+            let groupplay = row['groupplay'];
             let github = row['github'];
             let blog = row['blog'];
             let image = row['image'];
 
             let temp_html = `<div class="col">
-                <div class="card" style="width: 24rem" onclick="openModal(5)">
-                    <img src="${image}" class="card-img" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">${name}</h5>
-                    </div>
-                </div>
-            </div>`;
+        <div class="card" style="width: 24rem" onclick="openModal(5)">
+            <img src="${image}" class="card-img" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">${name}</h5>
+            </div>
+        </div>
+    </div>`;
 
             $('#member-card').append(temp_html);
 
             let mem = {
                 name: row['name'],
-                title: row['title'],
-                description: row['description'],
-                imageUrl: row['image'],
+                short: row['short'],
+                MBTI: row['mbti'],
+                Strength: row['pros'],
+                GroupPlay: row['groupplay'],
                 githubUrl: row['github'],
                 blogType: 'tistory',
-                blogUrl: row['blog']
-
+                blogUrl: row['blog'],
+                imageUrl: row['image']
             };
             members.push(mem);
         });
     </script>
+
 </head>
 
 <header>
@@ -218,8 +232,6 @@
     </nav>
 </header>
 
-
-
 <body>
 
     <main class="contents">
@@ -231,12 +243,20 @@
                 <label for="floatingInput">이름</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="title" placeholder="결심 한마디">
+                <input type="email" class="form-control" id="short" placeholder="결심 한마디">
                 <label for="floatingInput">결심 한마디</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="description" placeholder="자기소개">
-                <label for="floatingInput">자기소개</label>
+                <input type="email" class="form-control" id="mbti" placeholder="MBTI">
+                <label for="floatingInput">MBTI</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="pros" placeholder="본인의 장점">
+                <label for="floatingInput">본인의 장점</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="groupplay" placeholder="협업 스타일">
+                <label for="floatingInput">협업 스타일</label>
             </div>
             <div class="form-floating mb-3">
                 <input type="email" class="form-control" id="github" placeholder="GitHub 주소">
@@ -312,20 +332,25 @@
                 <div class="modal-body">
                     <div class="modal-left">
                         <img id="modalImage" src="" alt="Profile Image">
-                        <button id="githubButton" class="button">
-                            <img src="assets/logo/github-mark.png" alt="GitHub">GitHub</button>
-                        <div id="blogButtons">
-                            <a href="link-to-first-blog" class="button">
-                                <img src="assets/logo/green favicon.png" alt="Velog"> Velog
-                            </a>
-                            <a href="link-to-second-blog" class="button">
-                                <img src="assets/logo/logomark.png" alt="Tistory"> Tistory
-                            </a>
+                        <p id="modalShort"></p>
+                        <div class="buttonFamily">
+                            <button id="githubButton" class="button">
+                                <img src="assets/logo/github-mark.png" alt="GitHub">GitHub</button>
+                            <div id="blogButtons">
+                                <a href="link-to-first-blog" class="button">
+                                    <img src="assets/logo/green favicon.png" alt="Velog"> Velog
+                                </a>
+                                <a href="link-to-second-blog" class="button">
+                                    <img src="assets/logo/logomark.png" alt="Tistory"> Tistory
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-right">
-                    <p id="modalDescription"></p>
+                    <div class="modal-right">
+                        <p id="modalMBTI"></p>
+                        <p id="modalStrength"></p>
+                        <p id="modalgroupPlay"></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -337,7 +362,7 @@
 
 
     <!-- JavaScript 파일을 문서에 추가 -->
-    <script src="member.js"></script>
+    <script src="js/member.js"></script>
     <!-- Bootstrap JS와 의존성 파일 포함 -->
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
