@@ -162,28 +162,28 @@ main {
 }
 
 .modal-right {
+    line-height: 2.5rem;
+    font-size: 19px;
+    width: 450px;
     box-sizing: content-box;
-    width: 470px;
     position: absolute;
-    top: 200px;
-    left: 310px;
+    top: 100px;
+    left: 300px;
 }
 
 #modalTitle {
-    font-size: 30px;
-    margin-bottom: 10px;
+    font-size: 40px;
     font-weight: bold;
 }
 
 #modalShort {
     font-size: 20px;
     text-align: center;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
-#modalDescription {
-    text-align: left;
-    font-size: 20px;
-}
+
 
 /* 모달 버튼 스타일 */
 
@@ -216,6 +216,11 @@ main {
     display: flex;
     flex-direction: row;
     gap: 10px;
+}
+
+.buttonFamily {
+    display: flex;
+    flex-direction: row;
 }
 
 /* 모달 열릴 때 애니메이션 */
