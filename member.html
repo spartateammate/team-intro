@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,6 +40,8 @@
 
         };
 
+
+
         // Firebase 인스턴스 초기화
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -50,6 +53,7 @@
 
         // 투데이 수를 카운트하는 함수
         async function todayCount() {
+            console.log("check point 1");
             const docRef = doc(db, "team-intro", todayDate);
             const todayDB = await getDoc(docRef);
 
@@ -58,12 +62,14 @@
 
 
             if (!todayDB.data()) {
+                console.log("check point 2");
                 await setDoc(docRef, {
                     today: 1
                 });
                 $('#cnt').text(1);
                 localStorage.setItem('lastVisitDate', todayDate); // 현재 날짜를 저장
             } else {
+                console.log("check point 3");
                 let cnt = todayDB.data().today;
                 console.log("확인된 현재 날짜 : ", todayDate);
                 console.log("마지막 방문 날짜 : ", lastVisitDate);
@@ -83,13 +89,23 @@
         }
 
         // 문서가 준비 되면 실행되는 비동기 함수
-        $(document).ready(async function firstPageLoad() {
-            try {
-                await todayCount();
-            } catch (error) {
-                console.error('에러 발생:', error);
-            }
-        });
+        // $(document).ready(async function firstPageLoad() {
+        //     try {
+        //         await todayCount();
+        //     } catch (error) {
+        //         console.error('에러 발생:', error);
+        //     }
+        // });
+
+        // document ready 대체 사용
+        window.onload = async function () {
+            console.log("윈도우 온로드 들오옴");
+             try { await todayCount(); 
+
+             } catch (error) {
+                 console.error('에러 발생:', error); } };
+
+
 
         // 멤버 데이터 삽입 및 가져오기
         // 1. 이미지용 uuid 생성 및 파일 첨부
@@ -183,29 +199,32 @@
             };
             members.push(mem);
         });
+
     </script>
 
 </head>
+
 <body>
     <!-- 네비게이션 바 부분 -->
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" data-bs-theme="light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="home.html"><img src="assets/logo/fourlogo.png" alt="4" width="55px" height="55px"> all
+            <a class="navbar-brand" href="home.html"><img src="assets/logo/fourlogo.png" alt="4" width="55px"
+                    height="55px"> all
                 fect</a>
-    
+
             <!-- 방문자 수 카운트 -->
             <div class="navRightBox">
-    
+
                 <div class="tdCount">
                     오늘 방문자 수 : <span id="cnt">0</span>명
                 </div>
-    
+
                 <!-- 반응형 웹 토글 버튼 -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03"
                     aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-    
+
                 <div class="collapse navbar-collapse" id="navbarColor03">
                     <!--
                         me-auto : 왼쪽 정렬
@@ -350,7 +369,7 @@
             </div>
         </div>
         </div>
-<div class="footer-padding"></div>
+        <div class="footer-padding"></div>
 
 
     </main>
@@ -364,21 +383,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 
 
+    <!-- Footer 영역 -->
+    <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            <li class="nav-item"><a href="home.html" class="nav-link px-2 text-muted">Home</a></li>
+            <li class="nav-item"><a href="team.html" class="nav-link px-2 text-muted">팀 소개</a></li>
+            <li class="nav-item"><a href="member.html" class="nav-link px-2 text-muted">멤버 소개</a></li>
+        </ul>
+        <p class="text-center text-muted">©2024 TEAMSPARTA</p>
+    </footer>
+
+    <!-- 부트스트랩의 자바스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 
-<!-- Footer 영역 -->
-<footer class="py-3 my-4">
-    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-        <li class="nav-item"><a href="home.html" class="nav-link px-2 text-muted">Home</a></li>
-        <li class="nav-item"><a href="team.html" class="nav-link px-2 text-muted">팀 소개</a></li>
-        <li class="nav-item"><a href="member.html" class="nav-link px-2 text-muted">멤버 소개</a></li>
-    </ul>
-    <p class="text-center text-muted">©2024 TEAMSPARTA</p>
-</footer>
-
-<!-- 부트스트랩의 자바스크립트 -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
 
 </html>

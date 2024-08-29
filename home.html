@@ -20,13 +20,20 @@
 
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
-            apiKey: "AIzaSyCbzRMxv0-Y2smcZt-9ZQL6pdBJ0Ox52fk",
-            authDomain: "sparta-d87e6.firebaseapp.com",
-            projectId: "sparta-d87e6",
-            storageBucket: "sparta-d87e6.appspot.com",
-            messagingSenderId: "572511990535",
-            appId: "1:572511990535:web:972d78dff455f17c08cba2",
-            measurementId: "G-RHB882EJ8M"
+            // apiKey: "AIzaSyCbzRMxv0-Y2smcZt-9ZQL6pdBJ0Ox52fk",
+            // authDomain: "sparta-d87e6.firebaseapp.com",
+            // projectId: "sparta-d87e6",
+            // storageBucket: "sparta-d87e6.appspot.com",
+            // messagingSenderId: "572511990535",
+            // appId: "1:572511990535:web:972d78dff455f17c08cba2",
+            // measurementId: "G-RHB882EJ8M"
+            apiKey: "AIzaSyCLn7LxEdF5Km6d3DELpGe0PySsY-9xx4c",
+            authDomain: "sparta-afc86.firebaseapp.com",
+            projectId: "sparta-afc86",
+            storageBucket: "sparta-afc86.appspot.com",
+            messagingSenderId: "947455013488",
+            appId: "1:947455013488:web:e16c099b85850220b7bab5",
+            measurementId: "G-4GKC2RNF92"
         };
 
         // Firebase 인스턴스 초기화
@@ -38,6 +45,7 @@
 
         // 투데이 수를 카운트하는 함수
         async function todayCount() {
+            console.log("check point 1");
             const docRef = doc(db, "team-intro", todayDate);
             const todayDB = await getDoc(docRef);
 
