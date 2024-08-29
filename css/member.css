@@ -59,6 +59,10 @@ main {
 
 /* 회원 목록 스타일 */
 .member {
+    /* margin: 50px 0; */
+    text-align: center;
+}
+.member-info{
     margin: 50px 0;
     text-align: center;
 }
