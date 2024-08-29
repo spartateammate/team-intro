@@ -1,0 +1,87 @@
+.header-padding {
+    padding-bottom: 200px;
+}
+.footer-padding {
+    margin-bottom: 300px;
+}
+.content-wrap {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.flex-box {
+    display: flex;
+}
+
+.ytb-box {
+    border-radius: 30px;
+}
+
+.todo-box {
+    margin-left: 50px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+}
+
+th,
+td {
+    border: 1px solid #000;
+    text-align: center;
+    padding: 8px;
+}
+
+th {
+    background-color: #F7BD93;
+    color: white;
+}
+
+/*여기부터 to do list*/
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.home-li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e3f2fd;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    width: 550px;
+}
+
+.task {
+    flex-grow: 1;
+}
+
+.task input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.btn {
+    background-color: #F7BD93;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #f3ac7a;
+}

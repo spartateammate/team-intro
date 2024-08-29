@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="css/frame.css">
+    <link rel="stylesheet" href="css/home.css">
     <script type="module">
         // Firebase SDK 라이브러리 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
@@ -125,92 +126,8 @@
     </script>
 </head>
 
-<style>
-    body {
-        width: 1200px;
-        margin: 0 auto;
-        margin-top: 200px;
-    }
-
-    .flex-box {
-        display: flex;
-    }
-
-    .ytb-box {
-        border-radius: 30px;
-    }
-
-    .todo-box {
-        margin-left: 50px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        border-radius: 10px;
-    }
-
-    th,
-    td {
-        border: 1px solid #000;
-        text-align: center;
-        padding: 8px;
-    }
-
-    th {
-        background-color: #F7BD93;
-        color: white;
-    }
-
-    /*여기부터 to do list*/
-    h1 {
-        text-align: center;
-        color: #333;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    li {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #e3f2fd;
-        margin: 10px 0;
-        padding: 10px;
-        border-radius: 5px;
-        width: 550px;
-    }
-
-    .task {
-        flex-grow: 1;
-    }
-
-    .task input[type="checkbox"] {
-        margin-right: 10px;
-    }
-
-    .btn {
-        background-color: #F7BD93;
-        color: white;
-        border: none;
-        padding: 8px 12px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 14px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .btn:hover {
-        background-color: #f3ac7a;
-    }
-</style>
-
-<header>
+<body>
+    <!-- 여기부터 HEADER -->
     <!-- 네비게이션 바 부분 -->
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" data-bs-theme="light">
         <div class="container-fluid">
@@ -232,11 +149,11 @@
 
                 <div class="collapse navbar-collapse" id="navbarColor03">
                     <!--
-                        me-auto : 왼쪽 정렬
-                        mx-auto : 가운데 정렬
-                        ms-auto : 오른쪽 정렬
-                        px-2    : 좌우 패딩 
-                    -->
+                            me-auto : 왼쪽 정렬
+                            mx-auto : 가운데 정렬
+                            ms-auto : 오른쪽 정렬
+                            px-2    : 좌우 패딩 
+                        -->
                     <ul class="navbar-nav ms-auto nav-underline">
                         <li class="nav-item px-2">
                             <!--active 클래스를 추가하여 현재 페이지 나타내기-->
@@ -253,166 +170,161 @@
             </div>
         </div>
     </nav>
-</header>
+    <!-- 여기까지 HEADER -->
+    <!-- 여기부터 HOME -->
+    <div class="header-padding"></div>
+    <div class="content-wrap">
+        <div class="flex-box">
+            <div class="ytb-box">
 
-<body>
-    <div class="flex-box">
-        <div class="ytb-box">
-            <iframe width="600" height="390" style="border-radius: 1rem;"
-                src="https://www.youtube.com/embed/rTKqSmX9XhQ?si=gYOuA_26xz73ksTq" title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-        <div class="todo-box">
-            <div
-                style="background-color : 	#F7BD93; padding : 40px;color : #fff; border-radius: 10px; width: 490px;  height : 100px; margin-bottom: 30px;">
-                <div style="float : left;">
-                    <div class="weather_icon"></div>
-                </div><br>
+                <!-- 유튜브 부분 시작 -->
+                <iframe width="600" height="390" style="border-radius: 1rem; margin-top: 20px;"
+                    src="https://www.youtube.com/embed/rTKqSmX9XhQ?si=gYOuA_26xz73ksTq" title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <!-- 유튜브 끝 -->
 
-                <div style="float : right; margin : -5px 0px 0px 60px; font-size : 11pt">
-                    <div class="temp_min"></div>
-                    <div class="temp_max"></div>
-                    <div class="humidity"></div>
-                    <div class="wind"></div>
-                    <div class="cloud"></div>
-                </div>
-                <div style="float : right; margin-top : -45px;">
-                    <div class="current_temp" style="font-size : 50pt"></div>
-                    <div class="weather_description" style="font-size : 20pt"></div>
-                    <div class="city" style="font-size : 13pt"></div>
-                </div>
             </div>
-            <ul id="todo-list">
-                <li>
-                    <div class="task">
-                        <input type="checkbox"> TIL 제출
+            <div class="todo-box">
+
+                <!-- Open Weather API 시작 -->
+                <div
+                    style="background-color : 	#F7BD93; padding : 40px;color : #fff; border-radius: 10px; width: 550px;  height : 200px; margin-bottom: 30px;">
+                    <div style="float : left;">
+                        <div class="weather_icon"></div>
+                    </div><br>
+
+                    <div style="float : right; margin : -5px 0px 0px 60px; font-size : 11pt">
+                        <div class="temp_min"></div>
+                        <div class="temp_max"></div>
+                        <div class="humidity"></div>
+                        <div class="wind"></div>
+                        <div class="cloud"></div>
                     </div>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdJFwNJMfPoc2jPbVq9jkTFk-I5hP4LBPCLpHGx6rZ9C6WOIQ/viewform"
-                        class="btn" target="_blank">바로가기</a>
-                </li>
-                <li>
-                    <div class="task">
-                        <input type="checkbox"> 알고리즘 제출
+                    <div style="float : right; margin-top : -45px;">
+                        <div class="current_temp" style="font-size : 50pt"></div>
+                        <div class="weather_description" style="font-size : 20pt"></div>
+                        <div class="city" style="font-size : 13pt"></div>
                     </div>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeM4iHj97P0M6MkswZ2_Og55OkGNAWs8uv8FG1jVRXt7DNkaA/viewform"
-                        class="btn" target="_blank">바로가기</a>
-                </li>
-                <li>
-                    <div class="task">
-                        <input type="checkbox"> SQL 제출
-                    </div>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmxJ8zUm_aI64VJNWT8QDyoams8EyYo8QWSMcK7dPDIp2W-g/viewform"
-                        class="btn" target="_blank">바로가기</a>
-                </li>
-                <!-- <li>
-                    <div class="task">
-                        <input type="checkbox"> 데일리 루틴
-                    </div>
-                    <a href="https://docs.google.com/spreadsheets/d/1QKxFGflFb5hqbAAvosSOtECwrymAM_y7QSiw_lEj20A/edit?gid=0#gid=0" class="btn" target="_blank">바로가기</a>
-                </li>
-                <li>
-                    <div class="task">
-                        <input type="checkbox"> 출석체크
-                    </div>
-                    <a href="https://nbcamp.spartacodingclub.kr/mypage/attendance" class="btn" target="_blank">바로가기</a>
-                </li>
-                <li>
-                    <div class="task">
-                        <input type="checkbox"> 팀 노션
-                    </div>
-                    <a href="https://teamsparta.notion.site/4-all-fect-5bcfb5497efa4070972f8a5d4784a023" class="btn" target="_blank">바로가기</a>
-                </li> -->
-            </ul>
+                </div>
+                <!-- Open Weather API 끝  -->
+
+                <!-- To Do List 시작 -->
+                <ul id="todo-list">
+                    <li class="home-li">
+                        <div class="task">
+                            <input type="checkbox"> TIL 제출
+                        </div>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdJFwNJMfPoc2jPbVq9jkTFk-I5hP4LBPCLpHGx6rZ9C6WOIQ/viewform"
+                            class="btn" target="_blank">바로가기</a>
+                    </li>
+                    <li class="home-li">
+                        <div class="task">
+                            <input type="checkbox"> 알고리즘 제출
+                        </div>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeM4iHj97P0M6MkswZ2_Og55OkGNAWs8uv8FG1jVRXt7DNkaA/viewform"
+                            class="btn" target="_blank">바로가기</a>
+                    </li>
+                    <li class="home-li">
+                        <div class="task">
+                            <input type="checkbox"> SQL 제출
+                        </div>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdmxJ8zUm_aI64VJNWT8QDyoams8EyYo8QWSMcK7dPDIp2W-g/viewform"
+                            class="btn" target="_blank">바로가기</a>
+                    </li>
+                </ul>
+                <!-- To Do List 끝 -->
+
+            </div>
         </div>
+        <h2 style="float: right;">4 ALL FECT / WBS</h2>
+        <!-- WBS 시작 -->
+        <table>
+            <tr>
+                <th>업무</th>
+                <th>8/26(월)</th>
+                <th>8/27(화)</th>
+                <th>8/28(수)</th>
+                <th>8/29(목)</th>
+                <th>8/30(금)</th>
+            </tr>
+            <tr>
+                <td>팀 Github 생성</td>
+                <td><input type="checkbox" checked></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>웹 페이지에 들어갈 내용 구성</td>
+                <td><input type="checkbox" checked></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>와이어프레임 설계</td>
+                <td><input type="checkbox" checked></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>역할 분담</td>
+                <td><input type="checkbox" checked></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>페이지 구성</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox" checked></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>최종 코드 merge</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox" checked></td>
+                <td><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>QA 테스트</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox" checked></td>
+                <td><input type="checkbox" checked></td>
+            </tr>
+            <tr>
+                <td>발표용 시연 영상 녹화</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox" checked></td>
+                <td><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>결과물 제출 및 발표</td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox"></td>
+                <td><input type="checkbox" checked></td>
+            </tr>
+        </table>
+        <!-- WBS 끝 -->
     </div>
-    <h2 style="float: right;">4 ALL FECT / WBS</h2>
-
-    <table>
-        <tr>
-            <th>업무</th>
-            <th>8/26(월)</th>
-            <th>8/27(화)</th>
-            <th>8/28(수)</th>
-            <th>8/29(목)</th>
-            <th>8/30(금)</th>
-        </tr>
-        <tr>
-            <td>팀 Github 생성</td>
-            <td><input type="checkbox" checked></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-        </tr>
-        <tr>
-            <td>웹 페이지에 들어갈 내용 구성</td>
-            <td><input type="checkbox" checked></td>
-            <td><input type="checkbox" checked></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-        </tr>
-        <tr>
-            <td>와이어프레임 설계</td>
-            <td><input type="checkbox" checked></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-        </tr>
-        <tr>
-            <td>역할 분담</td>
-            <td><input type="checkbox" checked></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-        </tr>
-        <tr>
-            <td>페이지 구성</td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-        </tr>
-        <tr>
-            <td>최종 코드 merge</td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-        </tr>
-        <tr>
-            <td>QA 테스트</td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-        </tr>
-        <tr>
-            <td>발표용 시연 영상 녹화</td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-        </tr>
-        <tr>
-            <td>결과물 제출 및 발표</td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-        </tr>
-    </table>
-
-
+    <div class="footer-padding"></div>
 </body>
 
 <!-- Footer 영역 -->
@@ -424,6 +336,7 @@
     </ul>
     <p class="text-center text-muted">©2024 TEAMSPARTA</p>
 </footer>
+<!-- 여기까지 FOOTER -->
 
 <!-- 부트스트랩의 자바스크립트 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
