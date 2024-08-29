@@ -88,22 +88,22 @@
             }
         }
 
-        // 문서가 준비 되면 실행되는 비동기 함수
-        // $(document).ready(async function firstPageLoad() {
-        //     try {
-        //         await todayCount();
-        //     } catch (error) {
-        //         console.error('에러 발생:', error);
-        //     }
-        // });
+        //문서가 준비 되면 실행되는 비동기 함수
+        $(document).ready(async function firstPageLoad() {
+            try {
+                await todayCount();
+            } catch (error) {
+                console.error('에러 발생:', error);
+            }
+        });
 
         // document ready 대체 사용
-        window.onload = async function () {
+        /* window.onload = async function () {
             console.log("윈도우 온로드 들오옴");
              try { await todayCount(); 
 
              } catch (error) {
-                 console.error('에러 발생:', error); } };
+                 console.error('에러 발생:', error); } }; */
 
 
 
@@ -378,7 +378,7 @@
     <!-- JavaScript 파일을 문서에 추가 -->
     <script src="js/member.js"></script>
     <!-- Bootstrap JS와 의존성 파일 포함 -->
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-latest.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 
