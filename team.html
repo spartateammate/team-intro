@@ -71,8 +71,7 @@
                 localStorage.setItem('lastVisitDate', todayDate); // 현재 날짜를 저장
             } else {
                 let cnt = todayDB.data().today;
-                console.log("확인된 현재 날짜 : ", todayDate);
-                console.log("마지막 방문 날짜 : ", lastVisitDate);
+                
                 // 첫방문과 날짜가 다를경우
                 if (lastVisitDate === null || lastVisitDate !== todayDate) {
                     localStorage.setItem('lastVisitDate', todayDate); // 현재 날짜를 저장

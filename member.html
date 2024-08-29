@@ -53,7 +53,6 @@
 
         // 투데이 수를 카운트하는 함수
         async function todayCount() {
-            console.log("check point 1");
             const docRef = doc(db, "team-intro", todayDate);
             const todayDB = await getDoc(docRef);
 
@@ -62,17 +61,13 @@
 
 
             if (!todayDB.data()) {
-                console.log("check point 2");
                 await setDoc(docRef, {
                     today: 1
                 });
                 $('#cnt').text(1);
                 localStorage.setItem('lastVisitDate', todayDate); // 현재 날짜를 저장
             } else {
-                console.log("check point 3");
                 let cnt = todayDB.data().today;
-                console.log("확인된 현재 날짜 : ", todayDate);
-                console.log("마지막 방문 날짜 : ", lastVisitDate);
                 // 첫방문과 날짜가 다를경우
                 if (lastVisitDate === null || lastVisitDate !== todayDate) {
                     localStorage.setItem('lastVisitDate', todayDate); // 현재 날짜를 저장
@@ -96,14 +91,7 @@
                 console.error('에러 발생:', error);
             }
         });
-
-        // document ready 대체 사용
-        /* window.onload = async function () {
-            console.log("윈도우 온로드 들오옴");
-             try { await todayCount(); 
-
-             } catch (error) {
-                 console.error('에러 발생:', error); } }; */
+        
 
 
 
